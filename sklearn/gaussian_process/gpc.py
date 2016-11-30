@@ -174,7 +174,7 @@ class _BinaryGaussianProcessClassifierLaplace(BaseEstimator):
         else:
             self.kernel_ = clone(self.kernel)
 
-        self.rng = check_random_state(self.random_state)
+        self.rng_ = check_random_state(self.random_state)
 
         self.X_train_ = np.copy(X) if self.copy_X_train else X
 
@@ -216,8 +216,8 @@ class _BinaryGaussianProcessClassifierLaplace(BaseEstimator):
                         "requires that all bounds are finite.")
                 bounds = self.kernel_.bounds
                 for iteration in range(self.n_restarts_optimizer):
-                    theta_initial = np.exp(self.rng.uniform(bounds[:, 0],
-                                                            bounds[:, 1]))
+                    theta_initial = np.exp(self.rng_.uniform(bounds[:, 0],
+                                                             bounds[:, 1]))
                     optima.append(
                         self._constrained_optimization(obj_func, theta_initial,
                                                        bounds))
